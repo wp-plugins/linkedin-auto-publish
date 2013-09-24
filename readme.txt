@@ -4,7 +4,7 @@ Donate link: http://xyzscripts.com/donate/
 Tags:  linkedin auto publish, linkedIn publishing, post to linkedIn, linkedin, social media auto publish, social media publishing, social network auto publish, social media, social network, add link to linkedIn
 Requires at least: 2.8
 Tested up to: 3.6
-Stable tag: 1.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 
 Publish posts automatically to LinkedIn.
@@ -109,10 +109,19 @@ More questions ? [Drop a mail](http://xyzscripts.com/members/support/ "XYZScript
 
 == Changelog ==
 
+= LinkedIn Auto Publish 1.0.1 =
+* Default image fetch logic for auto publish updated.
+
 = LinkedIn Auto Publish 1.0 =
 * First official launch.
 
 == Upgrade Notice ==
+
+= LinkedIn Auto Publish 1.0.1 =
+If you had issues  with default image used for auto publishing, you may apply this upgrade.
+
+= LinkedIn Auto Publish 1.0 =
+First official launch.
 
 == More Information ==
 
