@@ -173,6 +173,12 @@ function xyz_lnap_link_publish($post_ID) {
 		
 		$description=strip_tags($description);		
 		$description=strip_shortcodes($description);
+	
+	   	$description=str_replace("&nbsp;","",$description);
+		//$description=str_replace(array("\r\n","\r","\n"), '', $description);
+	
+		$excerpt=str_replace("&nbsp;","",$excerpt);
+		//$excerpt=str_replace(array("\r\n","\r","\n"), '', $excerpt);
 		
 		if($lnappikey!="" && $lnapisecret!="" && $lnoathtoken!="" && $lnoathseret!="" && $lnpost_permission==1 && $lnoauthverifier!="" && $lnaf==0)
 		{		
@@ -180,7 +186,7 @@ function xyz_lnap_link_publish($post_ID) {
 			
 			//$description=str_replace("&nbsp;", "", $description);
 			
-			$description_li=xyz_lnap_string_limit($description, 400);
+			$description_li=xyz_lnap_string_limit($description, 362);
 			$caption_li=xyz_lnap_string_limit($caption, 200);
 			$name_li=xyz_lnap_string_limit($name, 200);
 				
@@ -190,6 +196,9 @@ function xyz_lnap_link_publish($post_ID) {
 			$message4=str_replace('{POST_EXCERPT}', $excerpt, $message3);
 			$message5=str_replace('{POST_CONTENT}', $description, $message4);
 			$message5=str_replace('{USER_NICENAME}', $user_nicename, $message5);
+			
+			$message5=str_replace("&nbsp;","",$message5);
+			//$message5=str_replace(array("\r\n","\r","\n"), '', $message5);
 			
 			//$message5=xyz_lnap_string_limit($message5, 700);
 						
