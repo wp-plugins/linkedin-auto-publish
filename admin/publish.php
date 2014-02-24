@@ -12,48 +12,10 @@ foreach ($carr  as $cstyps ) {
 
 }
 
-
-function xyz_lnap_string_limit($string, $limit) {
-	
-	$space=" ";$appendstr=" ...";
-	if(mb_strlen($string) <= $limit) return $string;
-	if(mb_strlen($appendstr) >= $limit) return '';
-	$string = mb_substr($string, 0, $limit-mb_strlen($appendstr));
-	$rpos = mb_strripos($string, $space);
-	if ($rpos===false) 
-		return $string.$appendstr;
-   else 
-	 	return mb_substr($string, 0, $rpos).$appendstr;
-}
-
-function xyz_lnap_getimage($post_ID,$description_org)
-{
-	$attachmenturl="";
-	$post_thumbnail_id = get_post_thumbnail_id( $post_ID );
-	if($post_thumbnail_id!="")
-	{
-		$attachmenturl=wp_get_attachment_url($post_thumbnail_id);
-		$attachmentimage=wp_get_attachment_image_src( $post_thumbnail_id, full );
-		
-	}
-	else {
-		preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/is', $description_org, $matches);
-		if(isset($matches[1][0]))
-		$attachmenturl = $matches[1][0];
-		else
-		{
-			apply_filters('the_content', $description_org);
-			preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/is', $description_org, $matches);
-			if(isset($matches[1][0]))
-				$attachmenturl = $matches[1][0];
-		}
-		
-	
-	}
-	return $attachmenturl;
-}
 function xyz_lnap_link_publish($post_ID) {
 	
+	if(isset($_POST['xyz_lnap_hidden_meta']) && $_POST['xyz_lnap_hidden_meta']==1)
+		return ;
 	
 	$get_post_meta=get_post_meta($post_ID,"xyz_lnap",true);
 	if($get_post_meta!=1)
@@ -100,6 +62,7 @@ function xyz_lnap_link_publish($post_ID) {
 	if ($postpp->post_status == 'publish')
 	{
 		$posttype=$postpp->post_type;
+		$ln_publish_status=array();
 			
 		if ($posttype=="page")
 		{
@@ -175,16 +138,12 @@ function xyz_lnap_link_publish($post_ID) {
 		$description=strip_shortcodes($description);
 	
 	   	$description=str_replace("&nbsp;","",$description);
-		//$description=str_replace(array("\r\n","\r","\n"), '', $description);
 	
 		$excerpt=str_replace("&nbsp;","",$excerpt);
-		//$excerpt=str_replace(array("\r\n","\r","\n"), '', $excerpt);
 		
 		if($lnappikey!="" && $lnapisecret!="" && $lnoathtoken!="" && $lnoathseret!="" && $lnpost_permission==1 && $lnoauthverifier!="" && $lnaf==0)
-		{		
+		{
 			$contentln=array();
-			
-			//$description=str_replace("&nbsp;", "", $description);
 			
 			$description_li=xyz_lnap_string_limit($description, 362);
 			$caption_li=xyz_lnap_string_limit($caption, 200);
@@ -198,9 +157,6 @@ function xyz_lnap_link_publish($post_ID) {
 			$message5=str_replace('{USER_NICENAME}', $user_nicename, $message5);
 			
 			$message5=str_replace("&nbsp;","",$message5);
-			//$message5=str_replace(array("\r\n","\r","\n"), '', $message5);
-			
-			//$message5=xyz_lnap_string_limit($message5, 700);
 						
 				$contentln['comment'] =$message5;
 				$contentln['title'] = $name_li;
@@ -236,8 +192,11 @@ function xyz_lnap_link_publish($post_ID) {
 			}
 			catch(Exception $e)
 			{
-			//echo $e->getmessage();
+			$ln_publish_status["new"]=$e->getMessage();
 			}
+			
+			if(isset($response2['error']) && $response2['error']!="")
+				$ln_publish_status["new"]=$response2['error'];
 		}
 		else
 		{
@@ -247,15 +206,26 @@ function xyz_lnap_link_publish($post_ID) {
 		   }
 			catch(Exception $e)
 			{
-				//echo $e->getmessage();
+				$ln_publish_status["updateNetwork"]=$e->getMessage();
 			}
+			
+			if(isset($response2['error']) && $response2['error']!="")
+				$ln_publish_status["updateNetwork"]=$response2['error'];
+			
 		}
+		if(count($ln_publish_status)>0)
+			$ln_publish_status_insert=serialize($ln_publish_status);
+		else
+			$ln_publish_status_insert=1;
 		
-		/*if(isset($response2['success']))
-			echo "posted successfully";
-			else
-			echo "posting failed";die;*/
-		
+		$time=time();
+		$post_ln_options=array(
+				'postid'	=>	$post_ID,
+				'acc_type'	=>	"Linkedin",
+				'publishtime'	=>	$time,
+				'status'	=>	$ln_publish_status_insert
+		);
+		update_option('xyz_lnap_post_logs', $post_ln_options);
 		
 		}
 	}

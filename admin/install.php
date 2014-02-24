@@ -21,6 +21,10 @@ function lnap_free_network_install($networkwide) {
 
 function lnap_install_free()
 {
+	/*$pluginName = 'xyz-wp-smap/xyz-wp-smap.php';
+	if (is_plugin_active($pluginName)) {
+		wp_die( "The plugin LinkedIn Auto Publish cannot be activated unless the premium version of this plugin is deactivated. Back to <a href='".admin_url()."plugins.php'>Plugin Installation</a>." );
+	}*/
 	
 	global $current_user;
 	get_currentuserinfo();
@@ -52,6 +56,9 @@ function lnap_install_free()
 	add_option('xyz_lnap_include_pages', '0');
 	add_option('xyz_lnap_include_categories', 'All');
 	add_option('xyz_lnap_include_customposttypes', '');
+	add_option('xyz_lnap_peer_verification', '1');
+	add_option('xyz_lnap_post_logs', '');
+	add_option('xyz_lnap_premium_version_ads', '1');
 
 }
 

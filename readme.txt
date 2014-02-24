@@ -3,8 +3,8 @@ Contributors: f1logic
 Donate link: http://xyzscripts.com/donate/
 Tags:  linkedin auto publish, linkedIn publishing, post to linkedIn, linkedin, social media auto publish, social media publishing, social network auto publish, social media, social network, add link to linkedIn
 Requires at least: 2.8
-Tested up to: 3.8
-Stable tag: 1.0.2
+Tested up to: 3.8.1
+Stable tag: 1.1
 License: GPLv2 or later
 
 Publish posts automatically to LinkedIn.
@@ -99,6 +99,11 @@ When you create your own applications, it ensures that the posts to LinkedIn are
 You may use post title, content, excerpt, permalink, site title and user nicename for auto publishing.
 
 
+= 5. Why do I see SSL related errors in logs ? =
+
+SSL peer verification may not be functioning in your server. Please turn off SSL peer verification in settings of plugin and try again.
+
+
 More questions ? [Drop a mail](http://xyzscripts.com/members/support/ "XYZScripts Support") and we shall get back to you with the answers.
 
 
@@ -109,8 +114,13 @@ More questions ? [Drop a mail](http://xyzscripts.com/members/support/ "XYZScript
 
 == Changelog ==
 
+= LinkedIn Auto Publish 1.1 =
+* View logs for last published post
+* Option to enable/disable SSL peer verification
+* Option to reauthorize the application
+
 = LinkedIn Auto Publish 1.0.2 =
-* Bug fixed for &amp;nbsp; in post.
+* Bug fixed for &amp;nbsp; in post
 
 = LinkedIn Auto Publish 1.0.1 =
 * Default image fetch logic for auto publish updated.

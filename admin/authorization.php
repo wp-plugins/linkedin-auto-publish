@@ -1,5 +1,4 @@
 <?php
-
 $app_id = get_option('xyz_lnap_application_id');
 $app_secret = get_option('xyz_lnap_application_secret');
 $lnredirecturl=admin_url('admin.php?page=linkedin-auto-publish-settings&auth=3');
@@ -25,7 +24,7 @@ if(isset($_POST['lnauth']))
 	);
 
 	$OBJ_linkedin = new LNAPLinkedIn($API_CONFIG);
-	$response = $OBJ_linkedin->retrieveTokenRequest();//print_r($response);die;
+	$response = $OBJ_linkedin->retrieveTokenRequest();
 	
 	if(isset($response['error']))
 	{
@@ -34,17 +33,14 @@ if(isset($_POST['lnauth']))
 		exit();
 	}
 	
-	
 	$lnoathtoken=$response['linkedin']['oauth_token'];
 	$lnoathseret=$response['linkedin']['oauth_token_secret'];
-	
 
 	# Now we retrieve a request token. It will be set as $linkedin->request_token
 
 	update_option('xyz_lnap_lnoauth_token', $lnoathtoken);
 	update_option('xyz_lnap_lnoauth_secret',$lnoathseret);
 	header('Location: ' . LNAPLinkedIn::_URL_AUTH . $response['linkedin']['oauth_token']);
-	
 	die;
 	
 
@@ -75,11 +71,9 @@ if(isset($_GET['auth']) && $_GET['auth']==3 && get_option("xyz_lnap_lnaf")==1)
 	$OBJ_linkedin = new LNAPLinkedIn($API_CONFIG);
 	$response = $OBJ_linkedin->retrieveTokenAccess($lnoathtoken, $lnoathseret, $lnoauth_verifier);
 
-
 	# Now we retrieve a request token. It will be set as $linkedin->request_token
 	update_option('xyz_lnap_application_lnarray', $response['linkedin']);	
 	update_option('xyz_lnap_lnaf',0);
 
 }
-
 ?>

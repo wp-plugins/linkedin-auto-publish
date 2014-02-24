@@ -18,6 +18,7 @@ function xyz_lnap_menu()
 {
 	add_menu_page('LinkedIn Auto Publish - Manage settings', 'LinkedIn Auto Publish', 'manage_options', 'linkedin-auto-publish-settings', 'xyz_lnap_settings');
 	$page=add_submenu_page('linkedin-auto-publish-settings', 'LinkedIn Auto Publish - Manage settings', ' Settings', 'manage_options', 'linkedin-auto-publish-settings' ,'xyz_lnap_settings'); // 8 for admin
+	add_submenu_page('linkedin-auto-publish-settings', 'Linkedin Auto Publish - Logs', 'Logs', 'manage_options', 'linkedin-auto-publish-log' ,'xyz_lnap_logs');
 	add_submenu_page('linkedin-auto-publish-settings', 'LinkedIn Auto Publish - About', 'About', 'manage_options', 'linkedin-auto-publish-about' ,'xyz_lnap_about'); // 8 for admin
 }
 
@@ -43,5 +44,17 @@ function xyz_lnap_about()
 	require( dirname( __FILE__ ) . '/footer.php' );
 }
 
+
+function xyz_lnap_logs()
+{
+	$_POST = stripslashes_deep($_POST);
+	$_GET = stripslashes_deep($_GET);
+	$_POST = xyz_trim_deep($_POST);
+	$_GET = xyz_trim_deep($_GET);
+
+	require( dirname( __FILE__ ) . '/header.php' );
+	require( dirname( __FILE__ ) . '/logs.php' );
+	require( dirname( __FILE__ ) . '/footer.php' );
+}
 
 ?>

@@ -149,8 +149,7 @@ $lmessagetopost=esc_textarea(get_option('xyz_lnap_lnmessage'));
 
 $lnaf=get_option('xyz_lnap_lnaf');
 	if($lnaf==1 && $lnappikey!="" && $lnapisecret!="" )
-{
-
+	{
 	?>
 	
 	<span style="color:red; ">Application needs authorisation</span><br>	
@@ -160,6 +159,15 @@ $lnaf=get_option('xyz_lnap_lnaf');
 			<br><br>
 			</form>
 			<?php  }
+			else if($lnaf==0 && $lnappikey!="" && $lnapisecret!="" )
+			{
+				?>
+            <form method="post" >
+			
+			<input type="submit" class="submit_lnap_new" name="lnauth" value="Reauthorize" title="Reauthorize the account" />
+			<br><br>
+			</form>
+			<?php }
 			
 if(isset($_GET['auth']) && $_GET['auth']==3)
 			{
@@ -167,7 +175,7 @@ if(isset($_GET['auth']) && $_GET['auth']==3)
 					break;
 			?>
 			
-			<br><span style="color: green;">Application is authorized ,go posting </span><br>
+			<span style="color: green;">Application is authorized ,go posting </span><br>
 			
 			<?php 	
 			}
@@ -201,7 +209,7 @@ if(isset($_GET['auth']) && $_GET['auth']==3)
 
 	<div style="font-weight: bold;padding: 3px;">All fields given below are mandatory</div> 
 	
-	<table class="widefat" style="width: 99%">
+	<table class="widefat xyz_lnap_widefat_table" style="width: 99%">
 	<tr valign="top">
 	<td width="50%">Api key </td>					
 	<td>
@@ -226,11 +234,18 @@ if(isset($_GET['auth']) && $_GET['auth']==3)
 							of your blog.<br />{USER_NICENAME} - Insert the nicename
 							of the author.
 						</div></td>
-					<td>
-					
-<textarea id="xyz_lnap_lnmessage" name="xyz_lnap_lnmessage"	><?php if($lms3==""){echo esc_textarea(get_option('xyz_lnap_lnmessage'));}?></textarea>
-					</td>
-				</tr>
+	<td>
+	<select name="xyz_lnap_info" id="xyz_lnap_info" onchange="xyz_lnap_info_insert(this)">
+		<option value ="0" selected="selected">--Select--</option>
+		<option value ="1">{POST_TITLE}  </option>
+		<option value ="2">{PERMALINK} </option>
+		<option value ="3">{POST_EXCERPT}  </option>
+		<option value ="4">{POST_CONTENT}   </option>
+		<option value ="5">{BLOG_TITLE}   </option>
+		<option value ="6">{USER_NICENAME}   </option>
+		</select> </td></tr><tr><td>&nbsp;</td><td>
+		<textarea id="xyz_lnap_lnmessage"  name="xyz_lnap_lnmessage" style="height:80px !important;" ><?php if($lms3==""){echo esc_textarea(get_option('xyz_lnap_lnmessage'));}?></textarea>
+	</td></tr>
 
 	<tr valign="top">
 					<td>Attach image to linkedin post
@@ -292,7 +307,9 @@ No</option><option value="1" <?php  if(get_option('xyz_lnap_lnpost_permission')=
 		
         if(isset($_POST['post_types']))
 		$xyz_customtypes=$_POST['post_types'];
-
+        
+        $xyz_lnap_peer_verification=$_POST['xyz_lnap_peer_verification'];
+        $xyz_lnap_premium_version_ads=$_POST['xyz_lnap_premium_version_ads'];
 
 		$lnap_customtype_ids="";
 
@@ -310,6 +327,8 @@ No</option><option value="1" <?php  if(get_option('xyz_lnap_lnpost_permission')=
 		update_option('xyz_lnap_include_pages',$xyz_lnap_include_pages);
 		update_option('xyz_lnap_include_categories',$lnap_category_ids);
 		update_option('xyz_lnap_include_customposttypes',$lnap_customtype_ids);
+		update_option('xyz_lnap_peer_verification',$xyz_lnap_peer_verification);
+		update_option('xyz_lnap_premium_version_ads',$xyz_lnap_premium_version_ads);
 
 	}
 
@@ -317,6 +336,8 @@ No</option><option value="1" <?php  if(get_option('xyz_lnap_lnpost_permission')=
 	$xyz_lnap_include_pages=get_option('xyz_lnap_include_pages');
 	$xyz_lnap_include_categories=get_option('xyz_lnap_include_categories');
 	$xyz_lnap_include_customposttypes=get_option('xyz_lnap_include_customposttypes');
+	$xyz_lnap_peer_verification=esc_html(get_option('xyz_lnap_peer_verification'));
+	$xyz_lnap_premium_version_ads=esc_html(get_option('xyz_lnap_premium_version_ads'));
 
 
 	?>
@@ -325,7 +346,7 @@ No</option><option value="1" <?php  if(get_option('xyz_lnap_lnpost_permission')=
 
 		<form method="post">
 
-			<table class="widefat" style="width: 99%">
+			<table class="widefat xyz_lnap_widefat_table" style="width: 99%">
 
 				<tr valign="top">
 
@@ -382,7 +403,7 @@ No</option><option value="1" <?php  if(get_option('xyz_lnap_lnpost_permission')=
 								'hide_if_empty'      => false );
 
 						if(count(get_categories($args))>0)
-							echo str_replace( "<select", "<select multiple onClick=setcat(this) style='width:200px;height:100px;border:1px solid #cccccc;'", wp_dropdown_categories($args));
+							echo str_replace( "<select", "<select multiple onClick=setcat(this) style='width:200px;height:auto !important;border:1px solid #cccccc;'", wp_dropdown_categories($args));
 						else
 							echo "NIL";
 
@@ -426,8 +447,18 @@ No</option><option value="1" <?php  if(get_option('xyz_lnap_lnpost_permission')=
 				</tr>
 
 
+				<tr valign="top">
+				
+				<td scope="row" colspan="1" width="50%">SSL peer verification	</td><td><select name="xyz_lnap_peer_verification" >
+				
+				<option value ="1" <?php if($xyz_lnap_peer_verification=='1') echo 'selected'; ?> >Enable </option>
+				
+				<option value ="0" <?php if($xyz_lnap_peer_verification=='0') echo 'selected'; ?> >Disable </option>
+				</select> 
+				</td></tr>
+				
 
-				<tr valign="top" id="xyz_lnap">
+				<tr valign="top">
 
 					<td  colspan="1">Enable credit link to author
 					</td>
@@ -439,6 +470,22 @@ No</option><option value="1" <?php  if(get_option('xyz_lnap_lnpost_permission')=
 							<option
 								value="<?php echo $xyz_credit_link!='lnap'?$xyz_credit_link:0;?>"
 								<?php if($xyz_credit_link!='lnap') echo 'selected'; ?>>No</option>
+					</select>
+					</td>
+				</tr>
+				
+				<tr valign="top">
+
+					<td  colspan="1">Enable premium version ads
+					</td>
+					<td><select name="xyz_lnap_premium_version_ads" id="xyz_lnap_premium_version_ads">
+
+							<option value="1"
+							<?php if($xyz_lnap_premium_version_ads=='1') echo 'selected'; ?>>Yes</option>
+
+							<option
+								value="0"
+								<?php if($xyz_lnap_premium_version_ads=='0') echo 'selected'; ?>>No</option>
 					</select>
 					</td>
 				</tr>
@@ -511,6 +558,19 @@ function rd_cat_chn(val,act)
 		  jQuery("#cat_dropdown_span").show();
 	}
 	
+}
+
+function xyz_lnap_info_insert(inf){
+	
+    var e = document.getElementById("xyz_lnap_info");
+    var ins_opt = e.options[e.selectedIndex].text;
+    if(ins_opt=="0")
+    	ins_opt="";
+    var str=jQuery("textarea#xyz_lnap_lnmessage").val()+ins_opt;
+    jQuery("textarea#xyz_lnap_lnmessage").val(str);
+    jQuery('#xyz_lnap_info :eq(0)').prop('selected', true);
+    jQuery("textarea#xyz_lnap_lnmessage").focus();
+
 }
 </script>
 	<?php 

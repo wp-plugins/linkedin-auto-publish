@@ -1,3 +1,4 @@
+<?php if(get_option('xyz_lnap_premium_version_ads')==1){?>
 <div id="xyz-wp-lnap-premium">
 
 	<div style="float: left; padding: 0 5px">
@@ -19,7 +20,7 @@
 	</h2>		
 	</div>
 </div>
-
+<?php }?>
 
 <?php 
 if($_POST && isset($_POST['xyz_credit_link']))
