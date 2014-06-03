@@ -3,8 +3,8 @@ Contributors: f1logic
 Donate link: http://xyzscripts.com/donate/
 Tags:  linkedin auto publish, linkedIn publishing, post to linkedIn, linkedin, social media auto publish, social media publishing, social network auto publish, social media, social network, add link to linkedIn
 Requires at least: 2.8
-Tested up to: 3.8.1
-Stable tag: 1.1
+Tested up to: 3.9.1
+Stable tag: 1.1.1
 License: GPLv2 or later
 
 Publish posts automatically to LinkedIn.
@@ -113,6 +113,10 @@ More questions ? [Drop a mail](http://xyzscripts.com/members/support/ "XYZScript
 2. Publishing options while creating a post.
 
 == Changelog ==
+
+= LinkedIn Auto Publish 1.1.1 =
+* Added compatibility with wordpress 3.9.1
+* Compatibility with bitly plugin
 
 = LinkedIn Auto Publish 1.1 =
 * View logs for last published post

@@ -94,6 +94,12 @@ function xyz_lnap_link_publish($post_ID) {
 			}
 		}
 
+
+		$pluginName = 'bitly/bitly.php';
+		
+		if (is_plugin_active($pluginName)) {
+			remove_all_filters('post_link');
+		}
 		$link = get_permalink($postpp->ID);
 
 

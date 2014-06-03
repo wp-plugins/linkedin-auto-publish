@@ -46,7 +46,7 @@ if(isset($_POST['lnauth']))
 
 }
 
-if(isset($_GET['auth']) && $_GET['auth']==3 && get_option("xyz_lnap_lnaf")==1)
+if(isset($_GET['auth']) && $_GET['auth']==3)
 {
 	if(isset($_GET['auth_problem']))
 		break;

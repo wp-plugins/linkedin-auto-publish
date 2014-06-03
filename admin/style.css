@@ -20,7 +20,7 @@
 	}
 
 
-		.xyz_suggest,.xyz_star,.xyz_donate,.xyz_fbook,.xyz_support,.xyz_twitt,.xyz_gplus{
+		.xyz_suggest,.xyz_star,.xyz_donate,.xyz_fbook,.xyz_support,.xyz_twitt,.xyz_gplus,.xyz_linkdin{
 	height:16px;
 	background-repeat: no-repeat;
 	background-position: left center;
@@ -49,7 +49,7 @@
 	
 .xyz_fbook{
 	
-	background-image: url('images/facebook.png');
+	background-image: url('images/fb.gif');
 }
 .xyz_support{
 	
@@ -57,16 +57,37 @@
 }
 .xyz_twitt{
 	
-	background-image: url('images/twitter.png');
+	background-image: url('images/tw.gif');
 }
 .xyz_gplus{
 	
-	background-image: url('images/gplus.png');
+	background-image: url('images/gp.gif');
+}
+	
+.xyz_linkdin{
+	
+	background-image: url('images/linkedin.gif');
 }
 
+#linkedin-auto-publish .xyz_fbook{
+margin-left: 3px;
+}
+
+#linkedin-auto-publish .xyz_twitt{
+margin-left: 3px;
+}
 
 #linkedin-auto-publish .xyz_gplus{
 margin-left: 3px;
+}
+
+#linkedin-auto-publish .xyz_linkdin{
+margin-left: 3px;
+}
+
+
+#linkedin-auto-publish .xyz_support{
+margin-left: 3px;margin-right: -3px;
 }
 
 #linkedin-auto-publish .plugin-version-author-uri {

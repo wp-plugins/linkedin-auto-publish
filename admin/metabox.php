@@ -75,12 +75,14 @@ if(lcheckid==1)
 	
     document.getElementById("lnimg_lnap").style.display='';
 	document.getElementById("lnmf_lnap").style.display='';	
+	document.getElementById("lnmftarea_lnap").style.display='';	
 	document.getElementById("shareprivate_lnap").style.display='';	
 }
 else
 {
     document.getElementById("lnimg_lnap").style.display='none';
 	document.getElementById("lnmf_lnap").style.display='none';	
+	document.getElementById("lnmftarea_lnap").style.display='none';	
 	document.getElementById("shareprivate_lnap").style.display='none';		
 }
 
@@ -114,9 +116,9 @@ function dethide_lnap(id)
 	
 	
 	<tr valign="top">
-		<td class="xyz_lnap_pleft15">Enable auto publish	posts to my linkedin account
+		<td class="xyz_lnap_pleft15" width="60%">Enable auto publish	posts to my linkedin account
 		</td>
-		<td><select id="xyz_lnap_lnpost_permission" name="xyz_lnap_lnpost_permission"
+		<td width="40%"><select id="xyz_lnap_lnpost_permission" name="xyz_lnap_lnpost_permission"
 			onchange="displaycheck_lnap()">
 				<option value="0"
 				<?php  if(get_option('xyz_lnap_lnpost_permission')==0) echo 'selected';?>>
@@ -172,7 +174,9 @@ Public</option><option value="1" <?php  if(get_option('xyz_lnap_ln_shareprivate'
 		<option value ="4">{POST_CONTENT}   </option>
 		<option value ="5">{BLOG_TITLE}   </option>
 		<option value ="6">{USER_NICENAME}   </option>
-		</select> </td></tr><tr><td>&nbsp;</td><td>
+		</select> </td></tr>
+		
+		<tr id="lnmftarea_lnap"><td>&nbsp;</td><td>
 		<textarea id="xyz_lnap_lnmessage"  name="xyz_lnap_lnmessage" style="height:80px !important;" ><?php echo esc_textarea(get_option('xyz_lnap_lnmessage'));?></textarea>
 	</td></tr>
 	
