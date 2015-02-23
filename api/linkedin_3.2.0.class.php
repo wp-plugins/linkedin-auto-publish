@@ -1,5 +1,4 @@
 <?php
-error_reporting(0);
 /**
  * This file defines the 'LinkedIn' class. This class is designed to be a 
  * simple, stand-alone implementation of the LinkedIn API functions.
@@ -274,7 +273,6 @@ class LNAPLinkedIn {
 			throw new LNAPLinkedInException('LNAPLinkedIn->checkResponse(): $response must be an array');
 		}		
 
-	
 		// check for a match
 		if(in_array($response['info']['http_code'], $http_code_required)) {
 		  // response found
@@ -1182,7 +1180,7 @@ class LNAPLinkedIn {
     }
     if(!empty($body)) {
       $body = trim(htmlspecialchars(strip_tags(stripslashes($body))));
-      if(strlen($body) > self::_INV_BODY_LENGTH) {
+      if(mb_strlen($body) > self::_INV_BODY_LENGTH) {
         throw new LNAPLinkedInException('LNAPLinkedIn->invite(): message body length is too long - max length is ' . self::_INV_BODY_LENGTH . ' characters.');
       }
     } else {
@@ -2197,7 +2195,7 @@ class LNAPLinkedIn {
           if(array_key_exists('title', $content) && array_key_exists('submitted-url', $content)) {
             // we have shared content, format it as needed per rules above
             $content_title = trim(htmlspecialchars(strip_tags(stripslashes($content['title']))));
-            if(strlen($content_title) > self::_SHARE_CONTENT_TITLE_LENGTH) {
+            if(mb_strlen($content_title) > self::_SHARE_CONTENT_TITLE_LENGTH) {
               throw new LNAPLinkedInException('LNAPLinkedIn->share(): title length is too long - max length is ' . self::_SHARE_CONTENT_TITLE_LENGTH . ' characters.');
             }
             $content_xml .= '<content>
@@ -2208,7 +2206,7 @@ class LNAPLinkedIn {
             }
             if(array_key_exists('description', $content)) {
               $content_desc = trim(htmlspecialchars(strip_tags(stripslashes($content['description']))));
-              if(strlen($content_desc) > self::_SHARE_CONTENT_DESC_LENGTH) {
+              if(mb_strlen($content_desc) > self::_SHARE_CONTENT_DESC_LENGTH) {
                 throw new LNAPLinkedInException('LNAPLinkedIn->share(): description length is too long - max length is ' . self::_SHARE_CONTENT_DESC_LENGTH . ' characters.');
               }
               $content_xml .= '<description>' . $content_desc . '</description>';
@@ -2222,7 +2220,7 @@ class LNAPLinkedIn {
           if(array_key_exists('comment', $content)) {
           	// comment located
           	$comment = htmlspecialchars(trim(strip_tags(stripslashes($content['comment']))));
-          	if(strlen($comment) > self::_SHARE_COMMENT_LENGTH) {
+          	if(mb_strlen($comment) > self::_SHARE_COMMENT_LENGTH) {
               throw new LNAPLinkedInException('LNAPLinkedIn->share(): comment length is too long - max length is ' . self::_SHARE_COMMENT_LENGTH . ' characters.');
             }
             $content_xml .= '<comment>' . $comment . '</comment>';
@@ -2243,7 +2241,7 @@ class LNAPLinkedIn {
             if(array_key_exists('comment', $content)) {
             	// comment located
             	$comment = htmlspecialchars(trim(strip_tags(stripslashes($content['comment']))));
-            	if(strlen($comment) > self::_SHARE_COMMENT_LENGTH) {
+            	if(mb_strlen($comment) > self::_SHARE_COMMENT_LENGTH) {
                 throw new LNAPLinkedInException('LNAPLinkedIn->share(): comment length is too long - max length is ' . self::_SHARE_COMMENT_LENGTH . ' characters.');
               }
               $content_xml .= '<comment>' . $comment . '</comment>';
@@ -2542,7 +2540,7 @@ class LNAPLinkedIn {
   
       // create the network update 
       $update = trim(htmlspecialchars(strip_tags($update, self::_NETWORK_HTML)));
-      if(strlen($update) > self::_NETWORK_LENGTH) {
+      if(mb_strlen($update) > self::_NETWORK_LENGTH) {
         throw new LNAPLinkedInException('LNAPLinkedIn->share(): update length is too long - max length is ' . self::_NETWORK_LENGTH . ' characters.');
       }
       $user   = htmlspecialchars('<a href="' . $profile_url . '">' . $first_name . ' ' . $last_name . '</a>');

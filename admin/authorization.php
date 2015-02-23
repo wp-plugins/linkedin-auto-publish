@@ -40,10 +40,11 @@ if(isset($_POST['lnauth']))
 
 	update_option('xyz_lnap_lnoauth_token', $lnoathtoken);
 	update_option('xyz_lnap_lnoauth_secret',$lnoathseret);
-	header('Location: ' . LNAPLinkedIn::_URL_AUTH . $response['linkedin']['oauth_token']);
+	
+	wp_redirect( LNAPLinkedIn::_URL_AUTH . $response['linkedin']['oauth_token']);
+	echo "<script>document.location.href='".LNAPLinkedIn::_URL_AUTH . $response['linkedin']['oauth_token']."'</script>";
 	die;
 	
-
 }
 
 if(isset($_GET['auth']) && $_GET['auth']==3)

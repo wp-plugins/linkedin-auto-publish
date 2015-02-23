@@ -54,12 +54,13 @@ function lnap_install_free()
 	update_option('xyz_lnap_free_version', $currentversion);
 	
 	add_option('xyz_lnap_include_pages', '0');
+	add_option('xyz_lnap_include_posts', '1');
 	add_option('xyz_lnap_include_categories', 'All');
 	add_option('xyz_lnap_include_customposttypes', '');
 	add_option('xyz_lnap_peer_verification', '1');
 	add_option('xyz_lnap_post_logs', '');
 	add_option('xyz_lnap_premium_version_ads', '1');
-
+	add_option('xyz_lnap_default_selection_edit', '0');
 }
 
 

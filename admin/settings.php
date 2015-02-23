@@ -214,6 +214,7 @@ if(isset($_GET['auth']) && $_GET['auth']==3)
 	<td width="50%">Api key </td>					
 	<td>
 		<input id="xyz_lnap_lnapikey" name="xyz_lnap_lnapikey" type="text" value="<?php if($lms1=="") {echo esc_html(get_option('xyz_lnap_lnapikey'));}?>"/>
+	<a href="http://docs.xyzscripts.com/wordpress-plugins/social-media-auto-publish/creating-linkedin-application" target="_blank">How can I create a Linkedin Application?</a>
 	</td></tr>
 	
 
@@ -295,8 +296,8 @@ No</option><option value="1" <?php  if(get_option('xyz_lnap_lnpost_permission')=
 	if(isset($_POST['bsettngs']))
 	{
 
-
 		$xyz_lnap_include_pages=$_POST['xyz_lnap_include_pages'];
+		$xyz_lnap_include_posts=$_POST['xyz_lnap_include_posts'];
 
 		if($_POST['xyz_lnap_cat_all']=="All")
 			$lnap_category_ids=$_POST['xyz_lnap_cat_all'];//redio btn name
@@ -310,7 +311,8 @@ No</option><option value="1" <?php  if(get_option('xyz_lnap_lnpost_permission')=
         
         $xyz_lnap_peer_verification=$_POST['xyz_lnap_peer_verification'];
         $xyz_lnap_premium_version_ads=$_POST['xyz_lnap_premium_version_ads'];
-
+        $xyz_lnap_default_selection_edit=$_POST['xyz_lnap_default_selection_edit'];
+        
 		$lnap_customtype_ids="";
 
 		if($xyz_customtypes!="")
@@ -325,20 +327,25 @@ No</option><option value="1" <?php  if(get_option('xyz_lnap_lnpost_permission')=
 
 
 		update_option('xyz_lnap_include_pages',$xyz_lnap_include_pages);
-		update_option('xyz_lnap_include_categories',$lnap_category_ids);
+		update_option('xyz_lnap_include_posts',$xyz_lnap_include_posts);
+		if($xyz_lnap_include_posts==0)
+			update_option('xyz_lnap_include_categories',"All");
+		else
+			update_option('xyz_lnap_include_categories',$lnap_category_ids);
 		update_option('xyz_lnap_include_customposttypes',$lnap_customtype_ids);
 		update_option('xyz_lnap_peer_verification',$xyz_lnap_peer_verification);
 		update_option('xyz_lnap_premium_version_ads',$xyz_lnap_premium_version_ads);
-
+		update_option('xyz_lnap_default_selection_edit',$xyz_lnap_default_selection_edit);
 	}
 
 	$xyz_credit_link=get_option('xyz_credit_link');
 	$xyz_lnap_include_pages=get_option('xyz_lnap_include_pages');
+	$xyz_lnap_include_posts=get_option('xyz_lnap_include_posts');
 	$xyz_lnap_include_categories=get_option('xyz_lnap_include_categories');
 	$xyz_lnap_include_customposttypes=get_option('xyz_lnap_include_customposttypes');
 	$xyz_lnap_peer_verification=esc_html(get_option('xyz_lnap_peer_verification'));
 	$xyz_lnap_premium_version_ads=esc_html(get_option('xyz_lnap_premium_version_ads'));
-
+	$xyz_lnap_default_selection_edit=esc_html(get_option('xyz_lnap_default_selection_edit'));
 
 	?>
 		<h2>Basic Settings</h2>
@@ -350,7 +357,7 @@ No</option><option value="1" <?php  if(get_option('xyz_lnap_lnpost_permission')=
 
 				<tr valign="top">
 
-					<td  colspan="1" width="50%">Publish wordpress `pages` to social media
+					<td  colspan="1" width="50%">Publish wordpress `pages` to linkedin
 					</td>
 					<td><select name="xyz_lnap_include_pages">
 
@@ -365,7 +372,22 @@ No</option><option value="1" <?php  if(get_option('xyz_lnap_lnpost_permission')=
 
 				<tr valign="top">
 
-					<td  colspan="1">Select wordpress categories for auto publish
+					<td  colspan="1">Publish wordpress `posts` to linkedin
+					</td>
+					<td><select name="xyz_lnap_include_posts" onchange="xyz_lnap_show_postCategory(this.value);">
+
+							<option value="1"
+							<?php if($xyz_lnap_include_posts=='1') echo 'selected'; ?>>Yes</option>
+
+							<option value="0"
+							<?php if($xyz_lnap_include_posts!='1') echo 'selected'; ?>>No</option>
+					</select>
+					</td>
+				</tr>
+				
+				<tr valign="top" id="selPostCat">
+
+					<td  colspan="1">Select post categories for auto publish
 					</td>
 					<td><input type="hidden"
 						value="<?php echo $xyz_lnap_include_categories;?>"
@@ -445,7 +467,17 @@ No</option><option value="1" <?php  if(get_option('xyz_lnap_lnpost_permission')=
 					?>
 					</td>
 				</tr>
+				<tr valign="top">
 
+					<td scope="row" colspan="1" width="50%">Default selection of auto publish while editing posts/pages	
+					</td><td><select name="xyz_lnap_default_selection_edit" >
+					
+					<option value ="1" <?php if($xyz_lnap_default_selection_edit=='1') echo 'selected'; ?> >Yes </option>
+					
+					<option value ="0" <?php if($xyz_lnap_default_selection_edit=='0') echo 'selected'; ?> >No </option>
+					</select> 
+					</td>
+				</tr>
 
 				<tr valign="top">
 				
@@ -514,12 +546,18 @@ No</option><option value="1" <?php  if(get_option('xyz_lnap_lnpost_permission')=
 	//drpdisplay();
 var catval='<?php echo $xyz_lnap_include_categories; ?>';
 var custtypeval='<?php echo $xyz_lnap_include_customposttypes; ?>';
+var get_opt_cats='<?php echo get_option('xyz_lnap_include_posts');?>';
 jQuery(document).ready(function() {
 	  if(catval=="All")
 		  jQuery("#cat_dropdown_span").hide();
 	  else
 		  jQuery("#cat_dropdown_span").show();
 
+	  if(get_opt_cats==0)
+		  jQuery('#selPostCat').hide();
+	  else
+		  jQuery('#selPostCat').show();
+			  
 	}); 
 	
 function setcat(obj)
@@ -571,6 +609,13 @@ function xyz_lnap_info_insert(inf){
     jQuery('#xyz_lnap_info :eq(0)').prop('selected', true);
     jQuery("textarea#xyz_lnap_lnmessage").focus();
 
+}
+function xyz_lnap_show_postCategory(val)
+{
+	if(val==0)
+		jQuery('#selPostCat').hide();
+	else
+		jQuery('#selPostCat').show();
 }
 </script>
 	<?php 
