@@ -37,6 +37,8 @@ function lnap_free_destroy()
 	delete_option('xyz_lnap_twpost_image_permission');
 	delete_option('xyz_lnap_twaccestok_secret');
 	delete_option('xyz_lnap_twmessage');
+	delete_option('xyz_lnap_future_to_publish');
+	delete_option('xyz_lnap_apply_filters');
 	
 		
 	delete_option('xyz_lnap_free_version');

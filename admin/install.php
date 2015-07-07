@@ -33,20 +33,27 @@ function lnap_install_free()
 		add_option("xyz_credit_link", '0');
 	}
 	
+	$lnap_installed_date = get_option('lnap_installed_date');
+	if ($lnap_installed_date=="") {
+		$lnap_installed_date = time();
+		update_option('lnap_installed_date', $lnap_installed_date);
+	}
+	
 	add_option('xyz_lnap_application_lnarray', '');
 	add_option('xyz_lnap_ln_shareprivate', '0');
 	add_option('xyz_lnap_ln_sharingmethod', '0');
 	add_option('xyz_lnap_lnapikey', '');
 	add_option('xyz_lnap_lnapisecret', '');
 	
-	add_option('xyz_lnap_lnoauth_verifier', '');
-	add_option('xyz_lnap_lnoauth_token', '');
-	add_option('xyz_lnap_lnoauth_secret', '');
+// 	add_option('xyz_lnap_lnoauth_verifier', '');
+// 	add_option('xyz_lnap_lnoauth_token', '');
+// 	add_option('xyz_lnap_lnoauth_secret', '');
 	add_option('xyz_lnap_lnpost_permission', '1');
 	add_option('xyz_lnap_lnpost_image_permission', '1');
 	add_option('xyz_lnap_lnaf', '1');
 	add_option('xyz_lnap_lnmessage', '{POST_TITLE} - {PERMALINK}');
-	
+	add_option('xyz_lnap_future_to_publish', '1');
+	add_option('xyz_lnap_apply_filters', '');
 	
 
 	$version=get_option('xyz_lnap_free_version');

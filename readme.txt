@@ -3,8 +3,8 @@ Contributors: f1logic
 Donate link: http://xyzscripts.com/donate/
 Tags:  linkedin auto publish, linkedIn publishing, post to linkedIn, linkedin, social media auto publish, social media publishing, social network auto publish, social media, social network, add link to linkedIn
 Requires at least: 2.8
-Tested up to: 4.1
-Stable tag: 1.2
+Tested up to: 4.2.2
+Stable tag: 1.3
 License: GPLv2 or later
 
 Publish posts automatically to LinkedIn.
@@ -113,6 +113,13 @@ More questions ? [Drop a mail](http://xyzscripts.com/members/support/ "XYZScript
 2. Publishing options while creating a post.
 
 == Changelog ==
+
+= LinkedIn Auto Publish 1.3 =
+* Updated Linkedin API
+* Auto publish added during quick edit 
+* Added option to enable/disable "future_to_publish" hook for handling auto publish of scheduled posts	
+* Added options to enable/disable "the_content", "the_excerpt", "the_title" filters on content to be auto-published
+* Fixed category display issue
 
 = LinkedIn Auto Publish 1.2 =
 * Option to configure auto publish settings while editing posts/pages
