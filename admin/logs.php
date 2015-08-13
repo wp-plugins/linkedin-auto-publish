@@ -10,7 +10,7 @@
 
 
 <div style="text-align: left;padding-left: 7px;"><h3>Auto Publish Logs</h3></div>
-
+	<span>Last five logs</span>
 		   <table class="widefat" style="width: 99%; margin: 0 auto; border-bottom:none;">
 				<thead>
 					<tr class="xyz_smap_log_tr">
@@ -22,53 +22,71 @@
 					</thead>
 					<?php 
 					
-					$post_ln_logs = get_option('xyz_lnap_post_logs' );
+					$post_ln_logsmain = get_option('xyz_lnap_post_logs' );
 					
-					if($post_ln_logs!=""){
+					$post_ln_logsmain_array = array();
+					foreach ($post_ln_logsmain as $logkey => $logval)
+					{
+						$post_ln_logsmain_array[]=$logval;
 					
-						$postid=$post_ln_logs['postid'];
-						$acc_type=$post_ln_logs['acc_type'];
-						$publishtime=$post_ln_logs['publishtime'];
-						if($publishtime!="")
-							$publishtime=xyz_lnap_local_date_time('Y/m/d g:i:s A',$publishtime);
-						$status=$post_ln_logs['status'];
+					}
+					
+					if($post_ln_logsmain=='')
+					{
+						?>
+						<tr><td colspan="4" style="padding: 5px;">No logs Found</td></tr>
+						<?php
+					}
 					
 					
-					
-				
-					?>
-				<tr>
-				<td>&nbsp;</td>
-				<td  style="vertical-align: middle !important;padding: 5px;">
-				<?php echo $postid;	?>
-				</td>
-				
-				<td style="vertical-align: middle !important;padding: 5px;">
-				<?php echo $publishtime;?>
-				</td>
-				
-				<td style="vertical-align: middle !important;padding: 5px;">
-				<?php
-				
-				
-				if($status=="1")
-				echo "<span style=\"color:green\">Success</span>";
-				else if($status=="0")
-				echo '';
-				else
-				{
-				$arrval=unserialize($status);
-				foreach ($arrval as $a=>$b)
-				echo "<span style=\"color:red\">".$a." : ".$b."</span><br>";
-				
-				}
-				
-				?>
-				</td>
-				</tr>
-				<?php  }else{?>
-				<tr><td colspan="4" style="padding: 5px;">No logs Found</td></tr>
-				<?php }?>
+					if(is_array($post_ln_logsmain_array))
+					{
+						for($i=4;$i>=0;$i--)
+						{
+							if($post_ln_logsmain_array[$i]!='')
+							{
+								$post_ln_logs=$post_ln_logsmain_array[$i];
+								$postid=$post_ln_logs['postid'];
+								$acc_type=$post_ln_logs['acc_type'];
+								$publishtime=$post_ln_logs['publishtime'];
+								if($publishtime!="")
+									$publishtime=xyz_lnap_local_date_time('Y/m/d g:i:s A',$publishtime);
+								$status=$post_ln_logs['status'];
+								
+								?>
+								<tr>
+									<td>&nbsp;</td>
+									<td  style="vertical-align: middle !important;padding: 5px;">
+									<?php echo get_the_title($postid);	?>
+									</td>
+									
+									<td style="vertical-align: middle !important;padding: 5px;">
+									<?php echo $publishtime;?>
+									</td>
+									
+									<td style="vertical-align: middle !important;padding: 5px;">
+									<?php
+									
+									
+									if($status=="1")
+									echo "<span style=\"color:green\">Success</span>";
+									else if($status=="0")
+									echo '';
+									else
+									{
+										$arrval=unserialize($status);
+										foreach ($arrval as $a=>$b)
+										echo "<span style=\"color:red\">".$a." : ".$b."</span><br>";
+										
+									}
+									
+									?>
+									</td>
+								</tr>
+								<?php  
+							}
+						}
+					}?>
 				
            </table>
 			

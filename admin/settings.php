@@ -371,7 +371,7 @@ No</option><option value="1" <?php  if(get_option('xyz_lnap_lnpost_permission')=
 		}
 		$xyz_lnap_applyfilters_val=rtrim($xyz_lnap_applyfilters_val,',');
 		
-		update_option('xyz_lnap_std_apply_filters',$xyz_lnap_applyfilters_val);
+		update_option('xyz_lnap_apply_filters',$xyz_lnap_applyfilters_val);
 		update_option('xyz_lnap_include_pages',$xyz_lnap_include_pages);
 		update_option('xyz_lnap_include_posts',$xyz_lnap_include_posts);
 		if($xyz_lnap_include_posts==0)
@@ -385,13 +385,13 @@ No</option><option value="1" <?php  if(get_option('xyz_lnap_lnpost_permission')=
 		update_option('xyz_lnap_future_to_publish',$xyz_lnap_future_to_publish);
 	}
 
-	$xyz_lnap_future_to_publish=get_option('xyz_lnap_std_future_to_publish');
+	$xyz_lnap_future_to_publish=get_option('xyz_lnap_future_to_publish');
 	$xyz_credit_link=get_option('xyz_credit_link');
 	$xyz_lnap_include_pages=get_option('xyz_lnap_include_pages');
 	$xyz_lnap_include_posts=get_option('xyz_lnap_include_posts');
 	$xyz_lnap_include_categories=get_option('xyz_lnap_include_categories');
 	$xyz_lnap_include_customposttypes=get_option('xyz_lnap_include_customposttypes');
-	$xyz_lnap_apply_filters=get_option('xyz_lnap_std_apply_filters');
+	$xyz_lnap_apply_filters=get_option('xyz_lnap_apply_filters');
 	$xyz_lnap_peer_verification=esc_html(get_option('xyz_lnap_peer_verification'));
 	$xyz_lnap_premium_version_ads=esc_html(get_option('xyz_lnap_premium_version_ads'));
 	$xyz_lnap_default_selection_edit=esc_html(get_option('xyz_lnap_default_selection_edit'));
